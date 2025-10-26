@@ -216,8 +216,8 @@ html {
   position: relative;
   border: 1px solid rgba(255, 210, 180, 0.35);
   background: 
-    radial-gradient(circle at top, rgba(172, 66, 18, 0.684), transparent 50%),
-    rgba(133, 5, 5, 0.9);
+    radial-gradient(circle at top, rgba(172, 66, 18, 0.684), transparent 90%),
+    rgb(125, 33, 4);
   box-shadow:
     0 30px 55px -36px rgba(0, 0, 0, 0.75),
     inset 0 0 0 1px rgba(255, 255, 255, 0.08);
