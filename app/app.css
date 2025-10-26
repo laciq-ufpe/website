@@ -284,13 +284,12 @@ html {
 
 /* Event callouts */
 .event-callout {
-  border: 1px solid rgba(255, 210, 180, 0.35);
-  background: 
-    radial-gradient(circle, rgba(201, 124, 35, 0.35), transparent 55%),
-    rgba(93, 14, 14, 0.962);
+  border: 1px solid rgba(255, 202, 136, 0.45);
+  background-color: rgba(129, 23, 23, 0.94);
   box-shadow:
     0 30px 55px -36px rgba(0, 0, 0, 0.75),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    0 0 0 1px rgba(139, 100, 16, 0.499),
+    0 18px 32px -22px rgba(193, 119, 23, 0.811);
 }
 
 .event-callout h2 {
