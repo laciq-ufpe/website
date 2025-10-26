@@ -5,8 +5,8 @@ const IntroSection = () => {
             aria-labelledby="intro-title"
             style={{ backgroundImage: "url('/background.png')" }}
             className="
-                bg-red-800 bg-cover bg-center bg-no-repeat
-                px-50 py-10
+                layout-gutter bg-red-800 bg-cover bg-center bg-no-repeat
+                py-10
                 flex flex-col gap-y-8 md:flex-row md:items-center md:justify-between
             "
         >

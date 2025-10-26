@@ -1,12 +1,12 @@
 const NAV_ITEMS = [
     { label: "Apoio", href: "#apoio" },
     { label: "Sobre", href: "#sobre" },
-    { label: "Informações", href: "#organizacao" },
+    { label: "Organização", href: "#organizacao" },
 ];
 
 const Header = () => {
     return (
-        <header className="flex flex-row items-center justify-between px-50 py-5 bg-red-900/40 backdrop-blur">
+        <header className="layout-gutter flex flex-row items-center justify-between py-5 bg-red-900/40 backdrop-blur">
             <p className="text-2xl font-semibold">II SCIQ</p>
             <nav aria-label="Seções principais">
                 <ul className="flex flex-row items-center gap-x-5">

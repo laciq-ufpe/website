@@ -42,7 +42,7 @@ const SupportSection = ({ logos }: SupportSectionProps) => {
     }, [logos]);
 
     return (
-        <section id="apoio" className="px-50 pb-5" aria-label="Patrocinadores">
+        <section id="apoio" className="layout-gutter pb-5" aria-label="Patrocinadores">
             <h1 className="text-3xl">Apoio</h1>
 
             <div className="pt-12">

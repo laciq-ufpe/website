@@ -26,7 +26,7 @@ const EVENT_CALLOUTS = [
 
 const AboutSection = () => {
     return (
-        <section id="sobre" className="px-50 py-10" aria-labelledby="about-title">
+        <section id="sobre" className="layout-gutter py-10" aria-labelledby="about-title">
             <h1 id="about-title" className="text-3xl mb-4">Sobre</h1>
 
             <div className="space-y-4 text-lg/8 text-justify">

@@ -103,7 +103,7 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
     const endIndex = Math.min(total, startIndex + cardsPerView);
 
     return (
-        <section id="organizacao" className="px-50 py-10" aria-label="Organização">
+        <section id="organizacao" className="layout-gutter py-10" aria-label="Organização">
             <h1 className="text-3xl mb-6">Organização</h1>
 
             <div
