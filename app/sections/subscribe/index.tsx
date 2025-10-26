@@ -1,9 +1,50 @@
+import { useEffect, useState } from "react";
+
 const SubscribeSection = () => {
+    const [footerState, setFooterState] = useState({ visible: false, height: 0 });
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const footer = document.querySelector<HTMLElement>("footer");
+        if (!footer) return;
+
+        const updateHeight = () => {
+            setFooterState((prev) => ({
+                ...prev,
+                height: footer.getBoundingClientRect().height,
+            }));
+        };
+
+        updateHeight();
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setFooterState({
+                    visible: entry.isIntersecting,
+                    height: footer.getBoundingClientRect().height,
+                });
+            },
+            { threshold: 0 }
+        );
+
+        observer.observe(footer);
+        window.addEventListener("resize", updateHeight);
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("resize", updateHeight);
+        };
+    }, []);
+
+    const bottom = footerState.visible ? `calc(${footerState.height}px + 2rem)` : undefined;
+
     return (
         <button
             type="button"
-            className="floating-cta group inline-flex flex-col items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 px-18 py-4 text-center uppercase text-neutral-900 shadow-2xl transition-all duration-200 hover:translate-y-[-2px] hover:from-amber-300 hover:via-amber-400 hover:to-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200"
+            className="floating-cta group inline-flex flex-col items-center justify-center gap-1.5 uppercase"
             aria-label="Abrir inscrições para o II SCIQ"
+            style={{ bottom }}
         >
             <span className="floating-cta__label text-xl font-semibold tracking-wide">Inscreva-se</span>
             <span className="floating-cta__hint text-xs font-medium uppercase tracking-[0.3em] text-neutral-950/80">

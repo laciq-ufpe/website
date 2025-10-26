@@ -11,29 +11,31 @@ type OrganizationSectionProps = {
     organizations: OrganizationCard[];
 };
 
-const getCardsPerView = (count: number, width?: number) => {
+const selectCardsPerView = (count: number, width?: number) => {
     if (count <= 0) return 1;
-    if (width === undefined) return 1;
+    if (!width) return 1;
     if (width >= 1280) return Math.min(3, count);
     if (width >= 768) return Math.min(2, count);
     return 1;
 };
 
-const useResponsiveCardsPerView = (total: number) => {
+const useCardsPerView = (total: number) => {
     const [cardsPerView, setCardsPerView] = useState(() =>
-        getCardsPerView(total, typeof window === "undefined" ? undefined : window.innerWidth),
+        selectCardsPerView(total, typeof window === "undefined" ? undefined : window.innerWidth),
     );
 
     useEffect(() => {
-        setCardsPerView((current) => {
-            const next = getCardsPerView(total, typeof window === "undefined" ? undefined : window.innerWidth);
-            return current === next ? current : next;
-        });
+        const target = selectCardsPerView(
+            total,
+            typeof window === "undefined" ? undefined : window.innerWidth,
+        );
+        setCardsPerView((prev) => (prev === target ? prev : target));
     }, [total]);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
-        const handleResize = () => setCardsPerView(getCardsPerView(total, window.innerWidth));
+        const handleResize = () =>
+            setCardsPerView(selectCardsPerView(total, window.innerWidth));
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, [total]);
@@ -45,7 +47,17 @@ type TrackStyle = CSSProperties & { "--org-cards-per-view": string };
 
 const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
     const total = organizations.length;
-    const cardsPerView = useResponsiveCardsPerView(total);
+
+    if (!total) {
+        return (
+            <section id="organizacao" className="layout-gutter py-10" aria-label="Organização">
+                <h1 className="text-3xl mb-4">Organização</h1>
+                <p className="opacity-70">Nenhuma organização cadastrada.</p>
+            </section>
+        );
+    }
+
+    const cardsPerView = useCardsPerView(total);
     const pageCount = useMemo(
         () => Math.max(1, Math.ceil(total / cardsPerView)),
         [cardsPerView, total],
@@ -82,15 +94,6 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
         return () => window.removeEventListener("keydown", handleKey);
     }, [handleNext, handlePrev, isSinglePage]);
 
-    if (!total) {
-        return (
-            <section id="organizacao" className="px-50 py-10" aria-label="Organização">
-                <h1 className="text-3xl mb-4">Organização</h1>
-                <p className="opacity-70">Nenhuma organização cadastrada.</p>
-            </section>
-        );
-    }
-
     const trackStyle = useMemo<TrackStyle>(
         () => ({
             transform: `translateX(-${page * 100}%)`,
@@ -99,8 +102,6 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
         [cardsPerView, page],
     );
 
-    const startIndex = page * cardsPerView;
-    const endIndex = Math.min(total, startIndex + cardsPerView);
     const remainder = total % cardsPerView;
     const fillerCount =
         !isSinglePage && remainder !== 0 ? cardsPerView - remainder : 0;
@@ -108,9 +109,13 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
     return (
         <section id="organizacao" className="layout-gutter py-10" aria-label="Organização">
             <div className="flex items-center justify-between gap-4">
-                <h1 className="text-3xl mb-6 md:mb-0">Organização</h1>
+                <h1 className="text-3xl">Organização</h1>
                 {!isSinglePage && (
-                    <div className="flex items-center gap-2" role="group" aria-label="Controles do carrossel de organizações">
+                    <div
+                        className="flex items-center gap-2"
+                        role="group"
+                        aria-label="Controles do carrossel de organizações"
+                    >
                         <button
                             type="button"
                             className="org-nav-button"
@@ -140,41 +145,37 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
             >
                 <div className="org-viewport">
                     <div className="org-track" style={trackStyle}>
-                        {organizations.map((org, index) => {
-                            const cardId = `organization-card-${index}`;
-                            const isVisible = index >= startIndex && index < endIndex;
-
-                            return (
-                                <article
-                                    key={org.image}
-                                    className="org-card"
-                                    aria-hidden={isVisible ? undefined : true}
-                                    aria-label={org.name}
-                                    tabIndex={isVisible ? 0 : -1}
-                                >
-                                    <img
-                                        src={org.image}
-                                        alt={`Logo de ${org.name}`}
-                                        loading="lazy"
-                                        decoding="async"
-                                    />
+                        {organizations.map((org) => (
+                            <article
+                                key={org.image}
+                                className="org-card"
+                                aria-label={org.name}
+                                tabIndex={0}
+                            >
+                                <img
+                                    src={org.image}
+                                    alt={`Logo de ${org.name}`}
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                                <div className="org-card-body">
                                     {org.description && (
-                                        <p className="text-base text-center opacity-80 leading-relaxed">
+                                        <p className="org-card-description">
                                             {org.description}
                                         </p>
                                     )}
                                     {org.bullets.length > 0 && (
                                         <ul className="org-card-list" role="list">
                                             {org.bullets.map((bullet, bulletIndex) => (
-                                                <li key={`${cardId}-bullet-${bulletIndex}`}>
-                                                    {bullet}
+                                                <li key={`${org.name}-bullet-${bulletIndex}`}>
+                                                    <span>{bullet}</span>
                                                 </li>
                                             ))}
                                         </ul>
                                     )}
-                                </article>
-                            );
-                        })}
+                                </div>
+                            </article>
+                        ))}
                         {Array.from({ length: fillerCount }, (_, fillerIndex) => (
                             <article
                                 key={`org-placeholder-${fillerIndex}`}

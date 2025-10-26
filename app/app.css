@@ -130,10 +130,13 @@ html {
   background: rgba(255, 255, 255, 0.06);
   box-shadow: 0 22px 38px -32px rgba(0, 0, 0, 0.58);
   min-height: clamp(15rem, 34vw, 20rem);
+  align-content: start;
 }
 
 .org-card img {
-  max-width: clamp(6.5rem, 16vw, 10rem);
+  max-height: clamp(1rem, 14vw, 4rem);
+  aspect-ratio: 3/1;
+  width: auto;
   height: auto;
   object-fit: contain;
 }
@@ -174,13 +177,45 @@ html {
   pointer-events: none;
 }
 
+.org-card-body {
+  display: grid;
+  gap: 0.9rem;
+  width: 100%;
+}
+
+.org-card-description {
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
 .org-card-list {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.org-card-list li {
+  position: relative;
+  padding-left: 1.75rem;
   text-align: left;
-  list-style: disc;
-  padding-left: 1.5rem;
-  max-width: 32ch;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.org-card-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #ffcc4d, #ff9d1a);
+  box-shadow: 0 0 0 2px rgba(255, 205, 120, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -191,20 +226,56 @@ html {
 
 .floating-cta {
   position: fixed;
-  bottom: clamp(1.75rem, 4vw, 3.25rem);
   right: var(--layout-gutter);
+  bottom: clamp(1.75rem, 4vw, 3.25rem);
   z-index: 50;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   min-width: clamp(12rem, 28vw, 20rem);
-  padding: clamp(0.85rem, 2.2vw, 1.25rem) clamp(1.75rem, 4.5vw, 3rem);
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  padding: clamp(1rem, 2.5vw, 1.4rem) clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(1.05rem, 2.3vw, 1.45rem);
   border-radius: 9999px;
   text-align: center;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 20px 40px -25px rgba(0, 0, 0, 0.55);
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  color: #2d1414;
+  border: 1px solid rgba(255, 232, 180, 0.6);
+  background: linear-gradient(135deg, #ffcc4d, #ffa928, #ff8c1a);
+  box-shadow:
+    0 28px 52px -28px rgba(0, 0, 0, 0.55),
+    0 12px 24px -18px rgba(255, 173, 51, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
+.floating-cta:hover {
+  transform: translateY(-6px);
+  background: linear-gradient(135deg, #ffe066, #ffbd38, #ff9d1a);
+  box-shadow:
+    0 32px 60px -28px rgba(0, 0, 0, 0.6),
+    0 16px 32px -18px rgba(255, 173, 51, 0.6);
+}
+
+.floating-cta:focus-visible {
+  outline: 2px solid rgba(255, 204, 77, 0.85);
+  outline-offset: 4px;
+}
+
+.floating-cta__label,
+.floating-cta__hint {
+  color: inherit;
+}
+
+.floating-cta__hint {
+  letter-spacing: 0.32em;
+  opacity: 0.78;
+}
+
+/* General layout */
 :root {
-  --layout-gutter: clamp(20rem, 6vw, 30rem);
+  --layout-gutter: clamp(20rem, 8vw, 30rem);
 }
 
 .layout-gutter {
@@ -212,16 +283,15 @@ html {
   padding-right: var(--layout-gutter);
 }
 
+/* Event callouts */
 .event-callout {
-  position: relative;
   border: 1px solid rgba(255, 210, 180, 0.35);
   background: 
-    radial-gradient(circle at top, rgba(172, 66, 18, 0.684), transparent 90%),
-    rgb(125, 33, 4);
+    radial-gradient(circle, rgba(201, 124, 35, 0.35), transparent 70%),
+    linear-gradient(135deg, rgba(93, 14, 14, 0.962), rgba(140, 30, 30, 0.85));
   box-shadow:
     0 30px 55px -36px rgba(0, 0, 0, 0.75),
     inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  overflow: hidden;
 }
 
 .event-callout h2 {

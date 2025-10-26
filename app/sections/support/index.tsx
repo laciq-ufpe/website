@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 
 type SupportSectionProps = {
     logos: string[];
@@ -6,46 +6,33 @@ type SupportSectionProps = {
 
 const MIN_VISIBLE_ITEMS = 12;
 
-const Logo = ({ src }: { src: string }) => {
-    const base = "logo-img opacity-90 hover:opacity-100 transition-opacity will-change-transform";
-    const [extra, setExtra] = useState("");
-    const [scale, setScale] = useState(1);
-
-    return (
-        <img
-            src={src}
-            alt="Logo do patrocinador"
-            className={`${base} ${extra}`}
-            loading="lazy"
-            decoding="async"
-            style={{ transform: `scale(${scale})` }}
-            onLoad={(e) => {
-                const img = e.currentTarget;
-                const w = img.naturalWidth || 0;
-                const h = img.naturalHeight || 0;
-                if (w > 0 && h > 0) {
-                    const ratio = w / h;
-                }
-            }}
-        />
-    );
-};
-
 const SupportSection = ({ logos }: SupportSectionProps) => {
     const { hasLogos, sequence } = useMemo(() => {
         const sanitized = Array.isArray(logos) ? logos.filter(Boolean) : [];
         const has = sanitized.length > 0;
-        const shouldLoop = has && sanitized.length > 1;
-        const repeatCount = shouldLoop ? Math.max(2, Math.ceil(MIN_VISIBLE_ITEMS / sanitized.length)) : 1;
-        const items = shouldLoop ? Array.from({ length: repeatCount }, () => sanitized).flat() : sanitized;
-        return { hasLogos: has, sequence: items };
+        if (!has) return { hasLogos: false, sequence: [] as string[] };
+
+        if (sanitized.length === 1) {
+            return { hasLogos: true, sequence: sanitized };
+        }
+
+        const repeat = Math.max(2, Math.ceil(MIN_VISIBLE_ITEMS / sanitized.length));
+        return {
+            hasLogos: true,
+            sequence: Array.from({ length: repeat }, () => sanitized).flat(),
+        };
     }, [logos]);
 
     return (
-        <section id="apoio" className="layout-gutter pb-5" aria-label="Patrocinadores">
-            <h1 className="text-3xl">Apoio</h1>
+        <section id="apoio" className="layout-gutter py-10" aria-label="Patrocinadores">
+            <div className="flex items-center justify-between gap-6">
+                <h1 className="text-3xl">Apoio</h1>
+                <span className="text-sm uppercase tracking-[0.3em] opacity-70">
+                    Parceiros oficiais
+                </span>
+            </div>
 
-            <div className="pt-12">
+            <div className="pt-10">
                 {!hasLogos ? (
                     <p className="text-center opacity-70">Nenhum patrocinador encontrado.</p>
                 ) : (
@@ -62,7 +49,7 @@ const SupportSection = ({ logos }: SupportSectionProps) => {
                                     <img
                                         src={src}
                                         alt="Logo do patrocinador"
-                                        className="logo-img opacity-90 hover:opacity-100 transition-opacity"
+                                        className="logo-img opacity-90 transition-opacity hover:opacity-100"
                                         loading="lazy"
                                         decoding="async"
                                     />
