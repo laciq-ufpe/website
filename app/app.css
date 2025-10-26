@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Ubuntu:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -17,4 +17,56 @@ body {
 
 * {
   font-family: "Source Code Pro", monospace;
+}
+
+/* Carousel */
+.logo-carousel {
+  overflow: hidden;
+  width: 100%;
+  /* subtle edge fading for nicer looping; ignored where unsupported */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+}
+
+.logo-track {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  width: max-content;
+  animation: logo-marquee var(--marquee-duration, 22s) linear infinite;
+  will-change: transform;
+}
+
+/* Fixed-size box for each logo*/
+.logo-item {
+  width: clamp(8rem, 18vw, 14rem);   /* ~128–224px */
+  aspect-ratio: 3/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.75rem;
+  flex: 0 0 auto; /* prevent shrinking during animation */
+}
+
+/* Make logos fit proportionally inside the box */
+.logo-item .logo-img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block; /* avoid inline-gap baseline shifts */
+ }
+
+@keyframes logo-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .logo-track {
+    animation: none;
+    transform: none;
+  }
 }
