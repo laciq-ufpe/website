@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 type SupportSectionProps = {
     logos: string[];
 };
+
+const MIN_VISIBLE_ITEMS = 12;
 
 const Logo = ({ src }: { src: string }) => {
     const base = "logo-img opacity-90 hover:opacity-100 transition-opacity will-change-transform";
@@ -30,12 +32,17 @@ const Logo = ({ src }: { src: string }) => {
 };
 
 const SupportSection = ({ logos }: SupportSectionProps) => {
-    const hasLogos = Array.isArray(logos) && logos.length > 0;
-    // If only 1 logo, don't duplicate to avoid a visible seam
-    const sequence = hasLogos ? (logos.length > 1 ? [...logos, ...logos] : logos) : [];
+    const { hasLogos, sequence } = useMemo(() => {
+        const sanitized = Array.isArray(logos) ? logos.filter(Boolean) : [];
+        const has = sanitized.length > 0;
+        const shouldLoop = has && sanitized.length > 1;
+        const repeatCount = shouldLoop ? Math.max(2, Math.ceil(MIN_VISIBLE_ITEMS / sanitized.length)) : 1;
+        const items = shouldLoop ? Array.from({ length: repeatCount }, () => sanitized).flat() : sanitized;
+        return { hasLogos: has, sequence: items };
+    }, [logos]);
 
     return (
-        <section className="px-50 pb-5" aria-label="Patrocinadores">
+        <section id="apoio" className="px-50 pb-5" aria-label="Patrocinadores">
             <h1 className="text-3xl">Apoio</h1>
 
             <div className="pt-12">
@@ -50,8 +57,8 @@ const SupportSection = ({ logos }: SupportSectionProps) => {
                         aria-live="off"
                     >
                         <div className="logo-track hover:[animation-play-state:paused]">
-                            {sequence.map((src, i) => (
-                                <div key={`${src}-${i}`} className="logo-item">
+                            {sequence.map((src, index) => (
+                                <div key={`${src}-${index}`} className="logo-item">
                                     <img
                                         src={src}
                                         alt="Logo do patrocinador"
@@ -66,7 +73,7 @@ const SupportSection = ({ logos }: SupportSectionProps) => {
                 )}
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default SupportSection;

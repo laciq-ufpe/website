@@ -1,15 +1,14 @@
 const SubscribeSection = () => {
     return (
-        <div className="w-full flex justify-center py-10">
+        <section id="inscricao" className="px-50 py-10 text-center" aria-label="Inscrições">
             <button
-            className="
-                bg-neutral-600 hover:bg-neutral-700 transition-colors shadow-md
-                px-15 py-3 rounded-lg text-2xl uppercase cursor-pointer"
+                type="button"
+                className="inline-flex items-center justify-center rounded-lg bg-neutral-600 px-15 py-3 text-2xl uppercase shadow-md transition-colors hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
                 Inscreva-se
             </button>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
 export default SubscribeSection;

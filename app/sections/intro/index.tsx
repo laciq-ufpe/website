@@ -1,34 +1,37 @@
 const IntroSection = () => {
     return (
-        <div
-            style={{backgroundImage: "url('public/background.png')"}}
+        <section
+            id="inicio"
+            aria-labelledby="intro-title"
+            style={{ backgroundImage: "url('/background.png')" }}
             className="
-                bg-cover bg-no-repeat bg-center bg-red-800
-                px-50 py-10 flex flex-row justify-between items-center
+                bg-red-800 bg-cover bg-center bg-no-repeat
+                px-50 py-10
+                flex flex-col gap-y-8 md:flex-row md:items-center md:justify-between
             "
         >
             <div>
-                <h1 className="text-5xl/13 font-semibold mb-5">
-                    II Simpósio <br/>
-                    de Computação <br/>
-                    & Informação <br/>
+                <h1 id="intro-title" className="text-5xl/13 font-semibold mb-5">
+                    II Simpósio <br />
+                    de Computação <br />
+                    & Informação <br />
                     Quântica
                 </h1>
                 <p className="text-lg">
-                    Conferência: 13—14, novembro <br/>
+                    Conferência: 13—14, novembro <br />
                     Hackathon: 14—21, novembro
                 </p>
             </div>
-            <div>
-                <p className="text-2xl/13 text-right font-bold">
-                    ∣100⟩ anos <br/>
-                    da primeira <br/>
-                    Revolução <br/>
+            <div className="text-right md:text-right">
+                <p className="text-2xl/13 font-bold">
+                    ∣100⟩ anos <br />
+                    da primeira <br />
+                    Revolução <br />
                     Quântica
                 </p>
             </div>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
 export default IntroSection;

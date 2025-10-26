@@ -1,15 +1,29 @@
+const NAV_ITEMS = [
+    { label: "Apoio", href: "#apoio" },
+    { label: "Sobre", href: "#sobre" },
+    { label: "Informações", href: "#organizacao" },
+];
+
 const Header = () => {
-    // bg-stone-950
     return (
-        <div className="flex flex-row justify-between px-50 py-5 bg-red-800 relative">
+        <header className="flex flex-row items-center justify-between px-50 py-5 bg-red-900/40 backdrop-blur">
             <p className="text-2xl font-semibold">II SCIQ</p>
-            <div className="flex flex-row gap-x-5">
-                <p className="text-lg">Apoio</p>
-                <p className="text-lg">Sobre</p>
-                <p className="text-lg">Informações</p>
-            </div>
-        </div>
-    )
-}
+            <nav aria-label="Seções principais">
+                <ul className="flex flex-row items-center gap-x-5">
+                    {NAV_ITEMS.map((item) => (
+                        <li key={item.href}>
+                            <a
+                                href={item.href}
+                                className="text-lg transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </header>
+    );
+};
 
 export default Header;

@@ -15,6 +15,10 @@ body {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   font-family: "Source Code Pro", monospace;
 }
@@ -30,7 +34,7 @@ body {
 
 .logo-track {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 3.5rem;
   width: max-content;
   animation: logo-marquee var(--marquee-duration, 22s) linear infinite;
@@ -55,7 +59,7 @@ body {
   width: auto;
   height: auto;
   object-fit: contain;
-  display: block; /* avoid inline-gap baseline shifts */
+  display: block;
  }
 
 @keyframes logo-marquee {
@@ -68,5 +72,111 @@ body {
   .logo-track {
     animation: none;
     transform: none;
+  }
+}
+
+/* Org Carousel */
+.org-carousel {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.org-viewport {
+  overflow: hidden;
+  position: relative;
+  --org-fade-size: clamp(1rem, 4vw, 2.75rem);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--org-fade-size),
+    black calc(100% - var(--org-fade-size)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--org-fade-size),
+    black calc(100% - var(--org-fade-size)),
+    transparent 100%
+  );
+}
+
+.org-track {
+  display: flex;
+  width: 100%;
+  --org-card-gap: clamp(1rem, 3vw, 2rem);
+  gap: var(--org-card-gap);
+  transition: transform 0.6s ease;
+}
+
+.org-card {
+  flex: 0 0 calc(
+    (100% - (calc(var(--org-cards-per-view, 1) - 1) * var(--org-card-gap)))
+      / var(--org-cards-per-view, 1)
+  );
+  max-width: calc(
+    (100% - (calc(var(--org-cards-per-view, 1) - 1) * var(--org-card-gap)))
+      / var(--org-cards-per-view, 1)
+  );
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 25px 40px -30px rgba(0, 0, 0, 0.6);
+  min-height: clamp(18rem, 40vw, 24rem);
+}
+
+.org-card img {
+  max-width: clamp(7rem, 18vw, 12rem);
+  height: auto;
+  object-fit: contain;
+}
+
+.org-nav-button {
+  width: clamp(2.75rem, 6vw, 3.25rem);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 1.75rem;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.org-nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: scale(1.05);
+}
+
+.org-nav-button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.org-nav-button:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.org-card-list {
+  display: grid;
+  gap: 0.75rem;
+  text-align: left;
+  list-style: disc;
+  padding-left: 1.5rem;
+  max-width: 32ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .org-track {
+    transition: none;
   }
 }
