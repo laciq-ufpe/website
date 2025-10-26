@@ -26,7 +26,7 @@ const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: strin
         bullets: [
             "Hub de pesquisa, formação e inovação em tecnologias quânticas;",
             "Infraestrutura pioneira para PC quântico fotônico e rede de chaves quânticas;",
-            "Desenvolvimento integrado de hardware e software quânticos com parceiros acadêmicos e industriais.",
+            "Desenvolvimento integrado de hardware e software quânticos.",
         ],
     },
     {
@@ -35,7 +35,7 @@ const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: strin
         bullets: [
             "Referência nacional e internacional em computação;",
             "Parcerias com indústria e Porto Digital: histórico de colaborações e >40 empresas conectadas;",
-            "Programa Acadêmico em Ciência da Computação com nota máxima no CAPES (7).",
+            "Programa Acadêmico de Pós com nota máxima no CAPES (7).",
         ],
     },
     {
