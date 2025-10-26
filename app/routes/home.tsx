@@ -6,13 +6,14 @@ import IntroSection from "~/sections/intro";
 import OrganizationSection, { type OrganizationCard } from "~/sections/organization";
 import SubscribeSection from "~/sections/subscribe";
 import SupportSection from "~/sections/support";
+import Footer from "~/sections/footer";
 
 const IMAGE_PATTERN = /\.(png|jpe?g|svg|webp|gif)$/i;
 
 const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: string }> = [
   {
     file: "logo_laciq.png",
-    name: "LACIQ",
+    name: "Liga Acadêmica de Computação e Informação Quântica da UFPE",
     bullets: [
       "Primeira Liga Acadêmica de Quântica do Brasil",
       "Colaboração e produção acadêmica e científica",
@@ -21,16 +22,16 @@ const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: strin
   },
   {
     file: "logo_quanta.png",
-    name: "Quanta",
+    name: "Instituto de Tecnologias Quânticas da UFPE",
     bullets: [
-      "Instituto de Tecnologias Quânticas da UFPE",
+      "Instituto de tecnologias quânticas da UFPE",
       "Liderando investimento para construir computador fotônico",
       "Desenvolvimento de software e hardware quânticos",
     ],
   },
   {
     file: "logo_cin.png",
-    name: "CIn",
+    name: "Centro de Informática da UFPE",
     bullets: [
       "Centro de referência em computação e tecnologia",
       "Vasta experiência em parceria público-privada",
@@ -39,7 +40,7 @@ const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: strin
   },
   {
     file: "logo_ccen.png",
-    name: "CCEN",
+    name: "Centro de Ciências Exatas e da Natureza da UFPE",
     bullets: [
       "Pós e pesquisa de excelência, com oito cursos de graduação",
       "Berço de produção intelectual e prêmios estudantis",
@@ -48,7 +49,7 @@ const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: strin
   },
   {
     file: "logo_ctg.png",
-    name: "CTG",
+    name: "Centro de Tecnologia e Geociências",
     bullets: [
       "Centro de Tecnologia e Geociências da UFPE",
       "Integra áreas de engenharia, arquitetura e geociências",
@@ -136,6 +137,7 @@ const Home = () => {
         <AboutSection />
         <OrganizationSection organizations={organizations} />
       </main>
+      <Footer />
     </div>
   );
 };

@@ -101,10 +101,35 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
 
     const startIndex = page * cardsPerView;
     const endIndex = Math.min(total, startIndex + cardsPerView);
+    const remainder = total % cardsPerView;
+    const fillerCount =
+        !isSinglePage && remainder !== 0 ? cardsPerView - remainder : 0;
 
     return (
         <section id="organizacao" className="layout-gutter py-10" aria-label="Organização">
-            <h1 className="text-3xl mb-6">Organização</h1>
+            <div className="flex items-center justify-between gap-4">
+                <h1 className="text-3xl mb-6 md:mb-0">Organização</h1>
+                {!isSinglePage && (
+                    <div className="flex items-center gap-2" role="group" aria-label="Controles do carrossel de organizações">
+                        <button
+                            type="button"
+                            className="org-nav-button"
+                            onClick={handlePrev}
+                            aria-label="Organização anterior"
+                        >
+                            ‹
+                        </button>
+                        <button
+                            type="button"
+                            className="org-nav-button"
+                            onClick={handleNext}
+                            aria-label="Próxima organização"
+                        >
+                            ›
+                        </button>
+                    </div>
+                )}
+            </div>
 
             <div
                 className="org-carousel"
@@ -113,17 +138,6 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                 aria-live="polite"
                 aria-label="Galeria de organizações"
             >
-                {!isSinglePage && (
-                    <button
-                        type="button"
-                        className="org-nav-button"
-                        onClick={handlePrev}
-                        aria-label="Organização anterior"
-                    >
-                        ‹
-                    </button>
-                )}
-
                 <div className="org-viewport">
                     <div className="org-track" style={trackStyle}>
                         {organizations.map((org, index) => {
@@ -135,7 +149,7 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                                     key={org.image}
                                     className="org-card"
                                     aria-hidden={isVisible ? undefined : true}
-                                    aria-labelledby={`${cardId}-title`}
+                                    aria-label={org.name}
                                     tabIndex={isVisible ? 0 : -1}
                                 >
                                     <img
@@ -144,12 +158,6 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                                         loading="lazy"
                                         decoding="async"
                                     />
-                                    <h2
-                                        id={`${cardId}-title`}
-                                        className="text-2xl font-semibold text-center"
-                                    >
-                                        {org.name}
-                                    </h2>
                                     {org.description && (
                                         <p className="text-base text-center opacity-80 leading-relaxed">
                                             {org.description}
@@ -167,19 +175,16 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                                 </article>
                             );
                         })}
+                        {Array.from({ length: fillerCount }, (_, fillerIndex) => (
+                            <article
+                                key={`org-placeholder-${fillerIndex}`}
+                                className="org-card org-card--placeholder"
+                                aria-hidden="true"
+                                tabIndex={-1}
+                            />
+                        ))}
                     </div>
                 </div>
-
-                {!isSinglePage && (
-                    <button
-                        type="button"
-                        className="org-nav-button"
-                        onClick={handleNext}
-                        aria-label="Próxima organização"
-                    >
-                        ›
-                    </button>
-                )}
             </div>
 
             {!isSinglePage && (

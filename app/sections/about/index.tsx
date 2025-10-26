@@ -41,7 +41,7 @@ const AboutSection = () => {
                 {EVENT_CALLOUTS.map((callout) => (
                     <section
                         key={callout.title}
-                        className="rounded-2xl border border-white/30 bg-white/10 p-6 backdrop-blur"
+                        className="event-callout rounded-2xl p-6"
                     >
                         <h2 className="text-2xl font-semibold tracking-tight">{callout.title}</h2>
                         <p className="mt-1 text-sm uppercase opacity-80">{callout.subtitle}</p>
