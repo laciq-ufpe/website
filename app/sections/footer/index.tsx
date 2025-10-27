@@ -1,9 +1,9 @@
 const Footer = () => {
     return (
-        <footer className="layout-gutter py-8 bg-red-900/30 backdrop-blur-sm border-t border-white/20">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <footer className="layout-gutter pt-5 pb-6 md:py-8 bg-red-900/30 backdrop-blur-sm border-t border-white/20">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <p className="text-lg font-semibold">LACIQ</p>
-                <ul className="flex flex-col gap-2 text-sm uppercase tracking-wide md:flex-row md:gap-15">
+                <ul className="flex flex-col gap-1.5 text-sm uppercase tracking-wide md:flex-row md:gap-15">
                     <li>
                         <a className="transition-opacity hover:opacity-80" href="mailto:laciq@cin.ufpe.br">
                             e-mail · laciq@cin.ufpe.br

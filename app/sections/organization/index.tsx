@@ -43,7 +43,10 @@ const useCardsPerView = (total: number) => {
     return cardsPerView;
 };
 
-type TrackStyle = CSSProperties & { "--org-cards-per-view": string };
+type TrackStyle = CSSProperties & {
+    "--org-cards-per-view": string;
+    "--org-card-gap"?: string;
+};
 
 const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
     const total = organizations.length;
@@ -58,6 +61,7 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
     }
 
     const cardsPerView = useCardsPerView(total);
+    const isSingleCardView = cardsPerView === 1;
     const pageCount = useMemo(
         () => Math.max(1, Math.ceil(total / cardsPerView)),
         [cardsPerView, total],
@@ -94,20 +98,23 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
         return () => window.removeEventListener("keydown", handleKey);
     }, [handleNext, handlePrev, isSinglePage]);
 
-    const trackStyle = useMemo<TrackStyle>(
-        () => ({
+    const trackStyle = useMemo<TrackStyle>(() => {
+        const style: TrackStyle = {
             transform: `translateX(-${page * 100}%)`,
             "--org-cards-per-view": cardsPerView.toString(),
-        }),
-        [cardsPerView, page],
-    );
+        };
+        if (cardsPerView === 1) {
+            style["--org-card-gap"] = "0px";
+        }
+        return style;
+    }, [cardsPerView, page]);
 
     const remainder = total % cardsPerView;
     const fillerCount =
         !isSinglePage && remainder !== 0 ? cardsPerView - remainder : 0;
 
     return (
-        <section id="organizacao" className="layout-gutter py-10" aria-label="Organização">
+        <section id="organizacao" className="layout-gutter pt-6 pb-0 md:pt-10 md:pb-12" aria-label="Organização">
             <div className="flex items-center justify-between gap-4">
                 <h1 className="text-3xl">Organização</h1>
                 {!isSinglePage && (
@@ -143,8 +150,15 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                 aria-live="polite"
                 aria-label="Galeria de organizações"
             >
-                <div className="org-viewport">
-                    <div className="org-track" style={trackStyle}>
+                <div
+                    className="org-viewport"
+                    data-single={isSingleCardView ? "true" : "false"}
+                >
+                    <div
+                    className="org-track"
+                    style={trackStyle}
+                    data-single={isSingleCardView ? "true" : "false"}
+                    >
                         {organizations.map((org) => (
                             <article
                                 key={org.image}

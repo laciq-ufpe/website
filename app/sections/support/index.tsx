@@ -24,8 +24,8 @@ const SupportSection = ({ logos }: SupportSectionProps) => {
     }, [logos]);
 
     return (
-        <section id="apoio" className="layout-gutter py-10" aria-label="Patrocinadores">
-            <div className="flex items-center justify-between gap-6">
+        <section id="apoio" className="layout-gutter py-6 md:py-10" aria-label="Patrocinadores">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <h1 className="text-3xl">Apoio</h1>
                 <span className="text-sm uppercase tracking-[0.3em] opacity-70">
                     Parceiros oficiais

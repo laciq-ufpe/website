@@ -10,24 +10,24 @@ const IntroSection = () => {
             }}
             className="
                 layout-gutter bg-red-800 bg-cover bg-center bg-no-repeat
-                py-10
-                flex flex-col gap-y-8 md:flex-row md:items-stretch md:justify-between
+                py-6 md:py-10
+                flex flex-col gap-y-10 md:flex-row md:items-stretch md:justify-between
             "
         >
-            <div className="flex flex-col gap-5 md:flex-1 md:justify-between md:self-stretch">
-                <h1 id="intro-title" className="text-5xl/13 font-semibold mb-5">
+            <div className="flex flex-col gap-6 md:flex-1 md:justify-between md:self-stretch">
+                <h1 id="intro-title" className="headline-primary md:text-5xl/13">
                     II Simpósio <br />
                     de Computação <br />
                     & Informação <br />
                     Quântica
                 </h1>
-                <p className="text-lg">
+                <p className="intro-meta md:text-lg">
                     Conferência: 13—14, novembro <br />
                     Hackathon: 14—21, novembro
                 </p>
             </div>
             <div className="md:flex-1 md:self-stretch md:text-right">
-                <div className="flex flex-col gap-3 text-2xl font-bold md:h-full md:justify-between md:text-right md:gap-0">
+                <div className="flex flex-col gap-2 text-lg font-bold leading-tight md:h-full md:justify-between md:text-right md:gap-0 md:text-2xl">
                     <span>∣100⟩ anos</span>
                     <span>da primeira</span>
                     <span>Revolução</span>

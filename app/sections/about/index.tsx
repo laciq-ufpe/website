@@ -26,10 +26,10 @@ const EVENT_CALLOUTS = [
 
 const AboutSection = () => {
     return (
-        <section id="sobre" className="layout-gutter py-10" aria-labelledby="about-title">
+        <section id="sobre" className="layout-gutter py-6 md:py-10" aria-labelledby="about-title">
             <h1 id="about-title" className="text-3xl mb-4">Sobre</h1>
 
-            <div className="space-y-4 text-lg/8 text-justify">
+            <div className="space-y-4 text-base md:text-lg/8 text-left md:text-justify leading-relaxed">
                 {PARAGRAPHS.map((paragraph, index) => (
                     <p key={`about-paragraph-${index}`}>
                         {paragraph}

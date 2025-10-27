@@ -102,7 +102,7 @@ const Home = () => {
     return (
         <div className="min-h-screen bg-red-800 text-white">
             <Header />
-            <main className="flex flex-col gap-y-10">
+            <main className="flex flex-col gap-y-2 md:gap-y-10">
                 <IntroSection />
                 <SupportSection logos={logos} />
                 <AboutSection />
