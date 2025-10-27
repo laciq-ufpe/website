@@ -5,7 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({ mode }) => {
   // In dev, serve at root; in CI, prefer VITE_BASE provided by the workflow.
-  const fallbackBase = mode === "development" ? "/" : "/simposio2025/";
+  const fallbackBase = mode === "development" ? "/" : "/website/";
   return {
     base: process.env.VITE_BASE ?? fallbackBase,
     plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
