@@ -226,7 +226,7 @@ html {
 .floating-cta {
   position: fixed;
   right: var(--layout-gutter);
-  bottom: clamp(1.75rem, 4vw, 3.25rem);
+  bottom: calc(clamp(1.75rem, 4vw, 3.25rem) + var(--floating-offset, 0px));
   z-index: 50;
   display: inline-flex;
   flex-direction: column;
@@ -246,7 +246,7 @@ html {
   box-shadow:
     0 28px 52px -28px rgba(0, 0, 0, 0.55),
     0 12px 24px -18px rgba(255, 173, 51, 0.55);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: bottom 0.35s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .floating-cta:hover {
@@ -275,6 +275,29 @@ html {
 /* General layout */
 :root {
   --layout-gutter: clamp(20rem, 8vw, 30rem);
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --layout-gutter: clamp(1.25rem, 6vw, 2.75rem);
+  }
+
+  main {
+    padding-bottom: clamp(7rem, 18vw, 12rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .floating-cta {
+    left: clamp(1rem, 6vw, 1.75rem);
+    right: clamp(1rem, 6vw, 1.75rem);
+    min-width: auto;
+    padding: 0.85rem clamp(1.5rem, 6vw, 2rem);
+  }
+
+  main {
+    padding-bottom: clamp(10rem, 28vw, 15rem);
+  }
 }
 
 .layout-gutter {

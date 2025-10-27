@@ -6,10 +6,10 @@ const NAV_ITEMS = [
 
 const Header = () => {
     return (
-        <header className="layout-gutter flex flex-row items-center justify-between py-5 bg-red-900/40 backdrop-blur">
+        <header className="layout-gutter flex flex-col gap-4 py-5 bg-red-900/40 backdrop-blur md:flex-row md:items-center md:justify-between">
             <p className="text-2xl font-semibold">II SCIQ</p>
             <nav aria-label="Seções principais">
-                <ul className="flex flex-row items-center gap-x-5">
+                <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 md:flex-nowrap">
                     {NAV_ITEMS.map((item) => (
                         <li key={item.href}>
                             <a
