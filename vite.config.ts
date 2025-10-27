@@ -3,6 +3,11 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+export default defineConfig(({ mode }) => {
+  // In dev, serve at root; in CI, prefer VITE_BASE provided by the workflow.
+  const fallbackBase = mode === "development" ? "/" : "/simposio2025/";
+  return {
+    base: process.env.VITE_BASE ?? fallbackBase,
+    plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  };
 });

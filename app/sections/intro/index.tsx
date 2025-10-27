@@ -1,11 +1,12 @@
 const IntroSection = () => {
+    const BASE = import.meta.env.BASE_URL;
     return (
         <section
             id="inicio"
             aria-labelledby="intro-title"
             style={{
                 backgroundImage:
-                    "linear-gradient(180deg, rgba(10, 0, 0, 0.85), rgba(10, 0, 0, 0.85)), url('/Group 24.png')",
+                    `linear-gradient(180deg, rgba(10, 0, 0, 0.85), rgba(10, 0, 0, 0.85)), url('${BASE}Group 24.png')`,
             }}
             className="
                 layout-gutter bg-red-800 bg-cover bg-center bg-no-repeat

@@ -1,4 +1,3 @@
-import { useLoaderData } from "react-router";
 import type { Route } from "./+types/home";
 import AboutSection from "~/sections/about";
 import Footer from "~/sections/footer";
@@ -7,6 +6,8 @@ import IntroSection from "~/sections/intro";
 import OrganizationSection, { type OrganizationCard } from "~/sections/organization";
 import SubscribeSection from "~/sections/subscribe";
 import SupportSection from "~/sections/support";
+import sponsorshipFiles from "~/data/sponsorships.json";
+import organizationFiles from "~/data/organizations.json";
 
 const IMAGE_PATTERN = /\.(png|jpe?g|svg|webp|gif)$/i;
 
@@ -58,62 +59,45 @@ const organizationCatalog: Array<Omit<OrganizationCard, "image"> & { file: strin
     },
 ];
 
-async function readDir(relativeDir: string) {
-    const fs = await import("node:fs/promises");
-    const path = await import("node:path");
-    try {
-        return await fs.readdir(path.resolve(process.cwd(), relativeDir));
-    } catch {
-        return [];
-    }
-}
-
 const toTitleCase = (filename: string) =>
     filename
         .replace(/\.[^/.]+$/, "")
         .replace(/[_-]+/g, " ")
         .replace(/\b\w/g, (char) => char.toUpperCase());
 
-async function loadSponsorships() {
-    const entries = await readDir("public/sponsorships");
-    return entries
+const BASE = import.meta.env.BASE_URL;
+
+function loadSponsorships() {
+    return sponsorshipFiles
         .filter((name) => IMAGE_PATTERN.test(name))
         .sort((a, b) => a.localeCompare(b))
-        .map((name) => `/sponsorships/${name}`);
+        .map((name) => `${BASE}sponsorships/${name}`);
 }
 
-async function loadOrganizations() {
-    const entries = await readDir("public/organization");
-    const available = new Set(entries.filter((name) => IMAGE_PATTERN.test(name)));
+function loadOrganizations() {
+    const available = new Set(
+        organizationFiles.filter((name) => IMAGE_PATTERN.test(name)),
+    );
 
     const curated = organizationCatalog.flatMap(({ file, ...meta }) => {
         if (!available.delete(file)) return [];
-        return [{ ...meta, image: `/organization/${file}` } satisfies OrganizationCard];
+        return [{ ...meta, image: `${BASE}organization/${file}` } satisfies OrganizationCard];
     });
 
     const extras = Array.from(available)
         .sort((a, b) => a.localeCompare(b))
         .map<OrganizationCard>((file) => ({
             name: toTitleCase(file),
-            image: `/organization/${file}`,
+            image: `${BASE}organization/${file}`,
             bullets: [],
         }));
 
     return [...curated, ...extras];
 }
 
-type LoaderData = {
-    logos: string[];
-    organizations: OrganizationCard[];
-};
-
-export async function loader(_: Route.LoaderArgs): Promise<LoaderData> {
-    const [logos, organizations] = await Promise.all([loadSponsorships(), loadOrganizations()]);
-    return { logos, organizations };
-}
-
 const Home = () => {
-    const { logos, organizations } = useLoaderData<typeof loader>();
+    const logos = loadSponsorships();
+    const organizations = loadOrganizations();
 
     return (
         <div className="min-h-screen bg-red-800 text-white">
