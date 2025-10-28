@@ -58,8 +58,10 @@ const SubscribeSection = () => {
     };
 
     return (
-        <button
-            type="button"
+        <a
+            href="https://www.even3.com.br/ii-simposio-de-computacao-e-informacao-quantica-da-laciq-642770/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="floating-cta group inline-flex flex-col items-center justify-center gap-1.5 uppercase"
             aria-label="Abrir inscrições para o II SCIQ"
             style={style}
@@ -68,7 +70,7 @@ const SubscribeSection = () => {
             <span className="floating-cta__hint text-xs font-medium uppercase tracking-[0.3em] text-neutral-950/80">
                 Vagas limitadas
             </span>
-        </button>
+        </a>
     );
 };
 
