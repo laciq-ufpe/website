@@ -80,10 +80,14 @@ const SubscribeSection = () => {
     const style: CSSProperties & { "--floating-offset"?: string } = {
         "--floating-offset": `${offsetPx}px`,
     };
+    const href =
+        language === "en"
+            ? "https://www.even3.com.br/ii-simposio-de-computacao-e-informacao-quantica-da-laciq-642770/?lang=en"
+            : "https://www.even3.com.br/ii-simposio-de-computacao-e-informacao-quantica-da-laciq-642770/";
 
     return (
         <a
-            href="https://www.even3.com.br/ii-simposio-de-computacao-e-informacao-quantica-da-laciq-642770/"
+            href={href}
             target="_blank"
             rel="noopener noreferrer"
             className="floating-cta group inline-flex flex-col items-center justify-center gap-1.5 uppercase"
