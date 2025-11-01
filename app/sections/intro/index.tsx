@@ -1,5 +1,41 @@
+import { useLanguage } from "~/contexts/language";
+
+const INTRO_COPY = {
+    pt: {
+        titleLines: [
+            "II Simpósio",
+            "de Computação",
+            "& Informação",
+            "Quântica",
+        ],
+        scheduleLines: ["Conferência: 13—14, novembro", "Hackathon: 14—21, novembro"],
+        highlightLines: ["∣100⟩ anos", "da primeira", "Revolução", "Quântica"],
+    },
+    en: {
+        titleLines: [
+            "II Symposium",
+            "on Quantum",
+            "Computing &",
+            "Information",
+        ],
+        scheduleLines: ["Conference: 13–14 November", "Hackathon: 14–21 November"],
+        highlightLines: ["∣100⟩ years", "since the first", "Quantum", "Revolution"],
+    },
+};
+
 const IntroSection = () => {
     const BASE = import.meta.env.BASE_URL;
+    const { language } = useLanguage();
+    const copy = INTRO_COPY[language];
+
+    const renderLines = (lines: string[]) =>
+        lines.map((line, index) => (
+            <span key={line}>
+                {line}
+                {index < lines.length - 1 && <br />}
+            </span>
+        ));
+
     return (
         <section
             id="inicio"
@@ -16,22 +52,17 @@ const IntroSection = () => {
         >
             <div className="flex flex-col gap-6 md:flex-1 md:justify-between md:self-stretch">
                 <h1 id="intro-title" className="headline-primary md:text-5xl/13">
-                    II Simpósio <br />
-                    de Computação <br />
-                    & Informação <br />
-                    Quântica
+                    {renderLines(copy.titleLines)}
                 </h1>
                 <p className="intro-meta md:text-lg">
-                    Conferência: 13—14, novembro <br />
-                    Hackathon: 14—21, novembro
+                    {renderLines(copy.scheduleLines)}
                 </p>
             </div>
             <div className="md:flex-1 md:self-stretch md:text-right">
                 <div className="flex flex-col gap-2 text-lg font-bold leading-tight md:h-full md:justify-between md:text-right md:gap-0 md:text-2xl">
-                    <span>∣100⟩ anos</span>
-                    <span>da primeira</span>
-                    <span>Revolução</span>
-                    <span>Quântica</span>
+                    {copy.highlightLines.map((line) => (
+                        <span key={line}>{line}</span>
+                    ))}
                 </div>
              </div>
         </section>

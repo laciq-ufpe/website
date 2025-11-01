@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useLanguage, type Language } from "~/contexts/language";
 
 export type OrganizationCard = {
     name: string;
@@ -48,14 +49,54 @@ type TrackStyle = CSSProperties & {
     "--org-card-gap"?: string;
 };
 
+const TEXT: Record<
+    Language,
+    {
+        sectionLabel: string;
+        title: string;
+        empty: string;
+        controlsLabel: string;
+        prevLabel: string;
+        nextLabel: string;
+        carouselLabel: string;
+        logoAlt: (name: string) => string;
+        pageIndicator: (page: number, total: number) => string;
+    }
+> = {
+    pt: {
+        sectionLabel: "Organização",
+        title: "Organização",
+        empty: "Nenhuma organização cadastrada.",
+        controlsLabel: "Controles do carrossel de organizações",
+        prevLabel: "Organização anterior",
+        nextLabel: "Próxima organização",
+        carouselLabel: "Galeria de organizações",
+        logoAlt: (name) => `Logo de ${name}`,
+        pageIndicator: (page, total) => `${page} / ${total}`,
+    },
+    en: {
+        sectionLabel: "Organization",
+        title: "Organization",
+        empty: "No organizing institutions registered.",
+        controlsLabel: "Organization carousel controls",
+        prevLabel: "Previous organization",
+        nextLabel: "Next organization",
+        carouselLabel: "Organization gallery",
+        logoAlt: (name) => `Logo of ${name}`,
+        pageIndicator: (page, total) => `Page ${page} of ${total}`,
+    },
+};
+
 const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
+    const { language } = useLanguage();
+    const text = TEXT[language];
     const total = organizations.length;
 
     if (!total) {
         return (
-            <section id="organizacao" className="layout-gutter py-10" aria-label="Organização">
-                <h1 className="text-3xl mb-4">Organização</h1>
-                <p className="opacity-70">Nenhuma organização cadastrada.</p>
+            <section id="organizacao" className="layout-gutter pt-6 pb-0 md:pt-10 md:pb-12" aria-label={text.sectionLabel}>
+                <h1 className="text-3xl mb-4">{text.title}</h1>
+                <p className="opacity-70">{text.empty}</p>
             </section>
         );
     }
@@ -114,20 +155,20 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
         !isSinglePage && remainder !== 0 ? cardsPerView - remainder : 0;
 
     return (
-        <section id="organizacao" className="layout-gutter pt-6 pb-0 md:pt-10 md:pb-12" aria-label="Organização">
+        <section id="organizacao" className="layout-gutter pt-6 pb-0 md:pt-10 md:pb-12" aria-label={text.sectionLabel}>
             <div className="flex items-center justify-between gap-4">
-                <h1 className="text-3xl">Organização</h1>
+                <h1 className="text-3xl">{text.title}</h1>
                 {!isSinglePage && (
                     <div
                         className="flex items-center gap-2"
                         role="group"
-                        aria-label="Controles do carrossel de organizações"
+                        aria-label={text.controlsLabel}
                     >
                         <button
                             type="button"
                             className="org-nav-button"
                             onClick={handlePrev}
-                            aria-label="Organização anterior"
+                            aria-label={text.prevLabel}
                         >
                             ‹
                         </button>
@@ -135,7 +176,7 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                             type="button"
                             className="org-nav-button"
                             onClick={handleNext}
-                            aria-label="Próxima organização"
+                            aria-label={text.nextLabel}
                         >
                             ›
                         </button>
@@ -148,16 +189,16 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                 role="region"
                 aria-roledescription="carousel"
                 aria-live="polite"
-                aria-label="Galeria de organizações"
+                aria-label={text.carouselLabel}
             >
                 <div
                     className="org-viewport"
                     data-single={isSingleCardView ? "true" : "false"}
                 >
                     <div
-                    className="org-track"
-                    style={trackStyle}
-                    data-single={isSingleCardView ? "true" : "false"}
+                        className="org-track"
+                        style={trackStyle}
+                        data-single={isSingleCardView ? "true" : "false"}
                     >
                         {organizations.map((org) => (
                             <article
@@ -168,7 +209,7 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
                             >
                                 <img
                                     src={org.image}
-                                    alt={`Logo de ${org.name}`}
+                                    alt={text.logoAlt(org.name)}
                                     loading="lazy"
                                     decoding="async"
                                 />
@@ -204,7 +245,7 @@ const OrganizationSection = ({ organizations }: OrganizationSectionProps) => {
 
             {!isSinglePage && (
                 <p className="mt-4 text-sm text-center opacity-70">
-                    {page + 1} / {pageCount}
+                    {text.pageIndicator(page + 1, pageCount)}
                 </p>
             )}
         </section>

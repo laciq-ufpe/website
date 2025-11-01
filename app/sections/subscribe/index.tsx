@@ -1,4 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
+import { useLanguage, type Language } from "~/contexts/language";
 
 type FooterState = {
     visible: boolean;
@@ -6,7 +7,30 @@ type FooterState = {
     ratio: number;
 };
 
+const COPY: Record<
+    Language,
+    {
+        label: string;
+        hint: string;
+        aria: string;
+    }
+> = {
+    pt: {
+        label: "Inscreva-se",
+        hint: "Vagas limitadas",
+        aria: "Abrir inscrições para o II SCIQ",
+    },
+    en: {
+        label: "Register",
+        hint: "Limited spots",
+        aria: "Open registrations for the II SCIQ",
+    },
+};
+
 const SubscribeSection = () => {
+    const { language } = useLanguage();
+    const copy = COPY[language];
+
     const [footerState, setFooterState] = useState<FooterState>({
         visible: false,
         height: 0,
@@ -63,12 +87,12 @@ const SubscribeSection = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="floating-cta group inline-flex flex-col items-center justify-center gap-1.5 uppercase"
-            aria-label="Abrir inscrições para o II SCIQ"
+            aria-label={copy.aria}
             style={style}
         >
-            <span className="floating-cta__label text-xl font-semibold tracking-wide">Inscreva-se</span>
+            <span className="floating-cta__label text-xl font-semibold tracking-wide">{copy.label}</span>
             <span className="floating-cta__hint text-xs font-medium uppercase tracking-[0.3em] text-neutral-950/80">
-                Vagas limitadas
+                {copy.hint}
             </span>
         </a>
     );
